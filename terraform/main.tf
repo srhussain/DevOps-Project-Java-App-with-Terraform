@@ -9,12 +9,12 @@ terraform {
     }
   }
 
-  backend "s3" {
-    # Update these values according to your setup
-    bucket = "oxigon-terraform-eks-state-s3-bucket"
-    key    = "java-app/terraform.tfstate"
-    region = "us-east-1"
-  }
+  # backend "s3" {
+  #   # Update these values according to your setup
+  #   bucket = "oxigon-terraform-eks-state-s3-bucket"
+  #   key    = "java-app/terraform.tfstate"
+  #   region = "us-east-1"
+  # }
 }
 
 provider "aws" {
@@ -82,22 +82,20 @@ resource "aws_route" "app_to_bastion" {
 
 # RDS Module
 
-module "rds" {
-  source      = "./modules/rds"
-  environment = var.environment
-  # vpc_id = module.vpc.vpc_cidr
-  db-name      = var.db_name
-  rds-username = var.db_username
-  rds-name     = var.db_name
-  sg-name      = var.sg-name
-  # private-subnet-name1=var.private_subnets[0]
-  rds-pwd = var.db_password
+# module "rds" {
+#   source      = "./modules/rds"
+#   environment = var.environment
+#   # vpc_id = module.vpc.vpc_cidr
+#   db-name      = var.db_name
+#   rds-username = var.db_username
+#   rds-name     = var.db_name
+#   sg-name      = var.sg-name
+#   # private-subnet-name1=var.private_subnets[0]
+#   rds-pwd = var.db_password
 
-  depends_on = [module.security]
+#   depends_on = [module.security]
 
-
-
-}
+# }
 
 module "ec2" {
   source                = "./modules/ec2"
@@ -108,6 +106,8 @@ module "ec2" {
   iam-policy            = var.iam-policy
   iam-role              = var.iam-role
   instance-profile-name = var.instance-profile-name
+  db_username           = var.db_username
+  db_password           = var.db_password
 
   depends_on = [module.security]
 
@@ -117,7 +117,7 @@ module "ec2" {
 module "ec2_bastion" {
   source        = "./modules/ec2_bastion"
   ami           = var.ami
-  instance_type = var.instance_type
+  instance_type = var.bastion_instance_type
   environment   = var.environment
   subnet_id     = module.vpc_bastion.public_subnet_ids
 

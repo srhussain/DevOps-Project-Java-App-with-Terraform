@@ -66,11 +66,11 @@ variable "db_username" {
 }
 
 variable "db_password" {
-  description = "Database master password"
+  description = "Enter MySQL root password"
   type        = string
-  # sensitive   = true
-  default = "Devops12345!"
+  sensitive   = true
 }
+
 
 variable "sg-name" {
   description = "Database master password"
@@ -88,6 +88,12 @@ variable "tg-name" {
   description = "Database master password"
   type        = string
   default     = "Oxigon-APP-TG"
+}
+
+variable "bastion_instance_type" {
+  description = "EC2 instance type"
+  type        = string
+  default     = "t2.small"
 }
 
 variable "instance_type" {
@@ -135,4 +141,4 @@ variable "asg_desired_capacity" {
   description = "Desired capacity of the Auto Scaling Group"
   type        = number
   default     = 2
-} 
+}
