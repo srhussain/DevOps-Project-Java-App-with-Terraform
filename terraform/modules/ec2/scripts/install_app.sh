@@ -8,14 +8,34 @@ echo "[INFO] Updating system packages..."
 sudo apt update -y
 sudo apt upgrade -y
 
+echo "[INFO] Installing/Updating AWS CLI v2..."
+
 sudo apt install -y unzip
 
 cd /tmp
-curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
-unzip awscliv2.zip
-sudo ./aws/install
 
+# Download AWS CLI
+curl -s "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+
+# Remove old extracted folder if exists
+rm -rf /tmp/aws
+
+unzip -q awscliv2.zip
+
+# Install or Update
+if [ -d "/usr/local/aws-cli" ]; then
+    echo "[INFO] AWS CLI already installed. Updating..."
+    sudo ./aws/install --update
+else
+    echo "[INFO] AWS CLI not found. Installing fresh..."
+    sudo ./aws/install
+fi
+
+# Ensure PATH is updated
 export PATH=$PATH:/usr/local/bin:/usr/bin
+
+echo "[INFO] AWS CLI installation/update completed."
+aws --version
 
 # ============================================================
 # 2. Install Java 8
@@ -140,7 +160,7 @@ if [ -f "$WAR_FILE" ]; then
 
 
     echo "[INFO] Deploying WAR file to Tomcat..."
-    sudo cp "$WAR_FILE" /opt/tomcat9/webapps/
+    sudo cp -r "$WAR_FILE" /opt/tomcat9/webapps/ROOT.war
 else
     echo "[WARN] WAR file not found in $APP_DIR/target"
 fi

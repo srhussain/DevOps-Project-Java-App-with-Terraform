@@ -77,6 +77,10 @@ APP_DIR="$REPO_DIR/Java-Login-App"
 cd "$APP_DIR"
 mvn clean install -DskipTests
 
+
+rm -rf /opt/tomcat9/webapps/ROOT
+rm -f /opt/tomcat9/webapps/ROOT.war
+
 # -------------------------
 # Deploy WAR file to Tomcat
 # -------------------------
