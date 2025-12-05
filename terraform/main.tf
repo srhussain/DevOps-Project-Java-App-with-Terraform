@@ -68,14 +68,22 @@ resource "aws_route" "bastion_to_app" {
   route_table_id            = module.vpc_bastion.public_route_table_id
   destination_cidr_block    = var.vpc_cidr
   vpc_peering_connection_id = aws_vpc_peering_connection.bastion_to_main.id
-  depends_on                = [aws_vpc_peering_connection.bastion_to_main]
+  depends_on = [
+    aws_vpc_peering_connection.bastion_to_main,
+    module.vpc_bastion,
+    module.vpc
+  ]
 }
 
 resource "aws_route" "app_to_bastion" {
   route_table_id            = module.vpc.private_route_table_id
   destination_cidr_block    = var.vpc_cidr_bastion
   vpc_peering_connection_id = aws_vpc_peering_connection.bastion_to_main.id
-  depends_on                = [aws_vpc_peering_connection.bastion_to_main]
+  depends_on = [
+    aws_vpc_peering_connection.bastion_to_main,
+    module.vpc_bastion,
+    module.vpc
+  ]
 }
 
 

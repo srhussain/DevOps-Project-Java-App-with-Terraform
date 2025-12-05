@@ -61,8 +61,8 @@ variable "db_name" {
 variable "db_username" {
   description = "Database master username"
   type        = string
-  # sensitive   = true
-  default = "devops"
+  sensitive   = true
+  # default     = "devops"
 }
 
 variable "db_password" {
