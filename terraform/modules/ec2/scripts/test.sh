@@ -1,6 +1,8 @@
 sudo systemctl stop mysql && sudo apt purge -y mysql-server mysql-client mysql-common mysql-server-core-* mysql-client-core-* && sudo rm -rf /etc/mysql /var/lib/mysql /var/log/mysql && sudo deluser mysql && sudo delgroup mysql && sudo apt autoremove -y && sudo apt autoclean
 
 
+ scp -i ec2_bastion/OXO-dev-bastion-key.pem ec2/OXO-dev-app-key.pem ubuntu@3.108.191.230:/home/ubuntu
+
 #!/bin/bash
 set -e
 
