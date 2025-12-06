@@ -41,6 +41,11 @@ Run the Deployment Script
 ./deploy.sh
   ```
 
+Enter the Password for DB
+e.g devops12345
+
+Enter the Username for DB
+eg devops
 
 This script will:
 
