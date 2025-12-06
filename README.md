@@ -38,6 +38,7 @@ Run the Deployment Script
 
   ```bash
 ./deploy.sh
+```
 
 
 This script will:
@@ -67,3 +68,4 @@ You can register yourself and then login using the credentials.
 Don't forget to destory the resources just run
 ```bash
 ./destroy.sh
+```
