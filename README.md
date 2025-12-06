@@ -32,13 +32,14 @@ Before running the deployment, make sure you have the following installed on you
    ```bash
    git clone https://github.com/srhussain/DevOps-Project-Java-App-with-Terraform.git
    cd DevOps-Project-Java-App-with-Terraform/scripts
+   ```
 
 
 Run the Deployment Script
 
   ```bash
 ./deploy.sh
-```
+  ```
 
 
 This script will:
@@ -66,6 +67,7 @@ After the ALB is ready, access the application using the ALB DNS.
 You can register yourself and then login using the credentials.
 
 Don't forget to destory the resources just run
+
 ```bash
 ./destroy.sh
 ```
